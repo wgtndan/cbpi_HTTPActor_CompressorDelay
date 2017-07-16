@@ -1,36 +1,30 @@
 from modules import cbpi
-from modules.core.hardware import ActorBase, SensorPassive, SensorActive
+from modules.core.hardware import ActorBase
 from modules.core.props import Property
 import httplib2
 from flask import request
-import base64
 
 @cbpi.actor
 class WIFISocket(ActorBase):
 
-    b_user = Property.Text("User", configurable=True, default_value="admin" )
-    c_password = Property.Text("Password", configurable=True, default_value="")
-    a_url = Property.Text("Url", configurable=True, default_value="http://")
-    # Command so swtich wifi socket on
-    onCommand = '<?xml version="1.0" encoding="utf-8"?><SMARTPLUG id="edimax"><CMD id="setup"><Device.System.Power.State>ON</Device.System.Power.State></CMD></SMARTPLUG>'
-    # Command so swtich wifi socket off
-    offCommand = '<?xml version="1.0" encoding="utf-8"?><SMARTPLUG id="edimax"><CMD id="setup"><Device.System.Power.State>OFF</Device.System.Power.State></CMD></SMARTPLUG>'
-
-    def send(self,  command):
+    a_url = Property.Text("Server Address", configurable=True, default_value="http://<ipaddress>:<port>", description="Address of the controller")
+    b_on = Property.Text("On Command", configurable=True, default_value="control?cmd=GPIO,<pin>,1", description="Command to turn actor on")
+    c_off = Property.Text("Off Command", configurable=True, default_value="control?cmd=GPIO,<pin>,0", description="Command to turn actor off")
+    d_pwm = Property.Text("PWM Command", configurable=True, default_value="control?cmd=PWM,<pin>,<level>", description="Command to set actor power level, if it supports PWM")
+    
+    def send(self, command, value=None):
         try:
             h = httplib2.Http(".cache")
-            auth = base64.encodestring( "%s:%s" % (self.b_user, self.c_password) )
-            headers = {'content-type': 'application/x-www-form-urlencoded', 'Authorization' : 'Basic ' + auth}
+            headers = {'content-type': 'application/x-www-form-urlencoded'}
             ## Sending http command ""
-            h.add_credentials( self.b_user, self.c_password)
-            (resp_headers, content) = h.request("%s/smartplug.cgi" % (self.a_url), "POST",  body=command, headers=headers)
+            (resp_headers, content) = h.request("%s/%s" % (self.a_url, command), "GET",  body=command, headers=headers)
         except Exception as e:
-            self.api.app.logger.error("FAIELD to switch WIFI socket %s User: %s" % (self.url, self.user))
+            self.api.app.logger.error("FAILED to switch HTTP actor: %s/%s" % (self.a_url, command))
 
-    def on(self, power=100):
-        self.send(self.onCommand)
+    def on(self, power=None):
+        self.send(self.b_on)
+        if power is not None:
+            self.send(self.d_pwm, power)
 
     def off(self):
-        self.send(self.onCommand)
-
-
+        self.send(self.c_off)
