@@ -10,7 +10,7 @@ class HTTPActor(ActorBase):
     a_url = Property.Text("Controller Address", configurable=True, default_value="http://<ipaddress>:<port>", description="Address of the controller. Do not add a trailing slash (ex: http://192.168.0.10)")
     b_on = Property.Text("On Command", configurable=True, default_value="control?cmd=GPIO,<pin>,1", description="Command to turn actor on")
     c_off = Property.Text("Off Command", configurable=True, default_value="control?cmd=GPIO,<pin>,0", description="Command to turn actor off")
-    d_pwm = Property.Text("PWM Command", configurable=True, default_value="control?cmd=PWM,<pin>,", description="Command to set actor power level. Power level will be added to the end of the command. If device does not support PWM, make this field blank.")
+    d_pow = Property.Text("Power Command", configurable=True, default_value="control?cmd=PWM,<pin>,", description="Command to set actor power level. Power level will be added to the end of the command. If device does not support this, make this field blank.")
     
     power = 100
     
@@ -31,8 +31,8 @@ class HTTPActor(ActorBase):
         self.send(self.c_off)
         
     def set_power(self, power):
-        if power is not None and self.d_pwm is not None and self.d_pwm:
+        if power is not None and self.d_pow is not None and self.d_pow:
             if power != self.power:
                 self.power = int(power)
-                self.send("%s%s" % (self.d_pwm, power))
+                self.send("%s%s" % (self.d_pow, power))
 
