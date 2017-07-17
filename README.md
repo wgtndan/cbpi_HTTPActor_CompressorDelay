@@ -5,6 +5,9 @@ The HTTPActor plugin allows CraftBeerPi to send commands to any device that acce
 
 This plugin is based on the WiFi Socket plugin, found here: https://github.com/Manuel83/cbpi-WIFISocket
 
+## Screenshot ##
+![httpactor](https://user-images.githubusercontent.com/29404417/28288881-a9440bae-6b0e-11e7-907d-23403ecbc3b2.PNG)
+
 ## Installation
 From CraftBeerPi, navigate to the **System** menu and click **Add-Ons**. Find the HTTPActor plugin and click Download.  You will then have to reboot your Pi for the plugin to become available.
 
