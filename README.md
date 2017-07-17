@@ -17,7 +17,7 @@ From CraftBeerPi, navigate to the **System** menu and click **Add-Ons**. Find th
     1. **Controller Address**: This is the IP address or hostname of the device that you wish to control. Make sure it is entered in the format `http://<ip address or hostname>:<port number if necessary>`. Do not add a trailing backslash to the end of the address.
     2. **On Command**: Enter the HTTP command that turns on this device on the controller. Do not add a slash to the beginning. *Example if using EasyESP: control?cmd=GPIO,(pin number),1*
     3. **Off Command**: Enter the HTTP command that turns off this device on the controller.  Do not add a slash to the beginning. *Example if using EasyESP: control?cmd=GPIO,(pin number),0*
-    4. **PWM Command**: If this device supports PWM, you may enter the command used to set the PWM value/power level on the controller. This command is different from the others, as the power level of the actor will be inserted automatically to the end of the command. Do not add a slash to the beginning. *Example if using EasyESP: control?PWM,(pin number),*
+    4. **Power Command**: If this device supports power states/PWM, you may enter the command used to set the power on the controller. This command is different from the others, as the power level of the actor will be inserted automatically to the end of the command. Do not add a slash to the beginning. *Example if using EasyESP: control?PWM,(pin number),*
     5. Click **Add** when done.
     
 ## Using the HTTPActor
