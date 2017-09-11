@@ -9,7 +9,7 @@ This plugin also utilises logic from the GPIO Compressor plugin, found here:
 https://github.com/carlallen/cbpi_GPIOCompressor
 
 ## Screenshot ##
-![httpactorcompressordelay]()
+![httpactorcompressordelay](https://user-images.githubusercontent.com/18130038/30268460-e0719af4-9739-11e7-8bdf-e097ba191223.png)
 
 ## Installation (Under Construction)
 From CraftBeerPi, navigate to the **System** menu and click **Add-Ons**. Find the HTTPActor with Compressor Delay plugin and click Download.  You will then have to reboot your Pi for the plugin to become available.
