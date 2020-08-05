@@ -37,7 +37,7 @@ class HTTPActor_Compressor(ActorBase):
             self.send(self.b_on)
             self.delayed = False
         else:
-            print "Delaying Turing on Compressor"
+            print("Delaying Turing on Compressor")
             cbpi.app.logger.info("Delaying Turing on Compressor")
             self.delayed = True
 
